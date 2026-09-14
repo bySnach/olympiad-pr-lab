@@ -13,7 +13,7 @@ def format_duration(minutes: int) -> str:
 
 def format_task_line(task: StudyTask) -> str:
     """Format one task with its completion marker and core details."""
-    marker = "[ ]" if task.completed else "[x]"
+    marker = "[x]" if task.completed else "[ ]"
     return (
         f"{marker} {task.task_id}: {task.title} "
         f"({format_duration(task.minutes)}, {task.priority})"
