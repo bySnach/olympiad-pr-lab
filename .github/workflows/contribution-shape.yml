@@ -131,4 +131,3 @@ jobs:
               [[ -z "$non_docs" ]] || fail "A DOC card must change documentation files only."
               ;;
           esac
-
