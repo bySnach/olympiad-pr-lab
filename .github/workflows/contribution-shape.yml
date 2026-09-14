@@ -93,7 +93,7 @@ jobs:
           esac
 
           pulls_json="$(api "/pulls?state=all&per_page=100")"
-          duplicates="$(jq --arg card "$card_id" --argjson current "$PR_NUMBER" '[.[] | select(.number != $current and (.state == "open" or .merged_at != null) and (.title | startswith($card + ":"))] | length' <<< "$pulls_json")"
+          duplicates="$(jq --arg card "$card_id" --argjson current "$PR_NUMBER" --arg open_state open --arg separator : '[.[] | select(.number != $current and (.state == $open_state or .merged_at != null) and (.title | startswith($card + $separator))] | length' <<< "$pulls_json")"
           (( duplicates == 0 )) || fail "$card_id already has an open or merged pull request."
 
           commits_json="$(api "/pulls/$PR_NUMBER/commits?per_page=100")"
