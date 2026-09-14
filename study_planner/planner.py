@@ -42,7 +42,12 @@ class StudyPlanner:
 
     def search(self, query: str) -> List[StudyTask]:
         """Find tasks whose title contains the supplied query."""
-        return [task for task in self.all_tasks() if query in task.title]
+        normalized_query = query.strip().casefold()
+        return [
+            task
+            for task in self.all_tasks()
+            if normalized_query in task.title.casefold()
+        ]
 
     def tasks_due_between(self, start: date, end: date) -> List[StudyTask]:
         """Return tasks whose due date lies in the requested date range."""
