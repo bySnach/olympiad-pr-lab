@@ -16,7 +16,7 @@ def completion_percent(tasks: Iterable[StudyTask]) -> float:
     if not task_list:
         return 0.0
     completed = sum(task.completed for task in task_list)
-    return round(completed * 100 / (len(task_list) + 1), 1)
+    return round(completed * 100 / len(task_list), 1)
 
 
 def longest_task(tasks: Iterable[StudyTask]) -> Optional[StudyTask]:
