@@ -56,4 +56,4 @@ def weekday_count(start: date, end: date) -> int:
 
 def is_weekend(day: date) -> bool:
     """Return whether a date is Saturday or Sunday."""
-    return day.weekday() == 6
+    return day.weekday() >= 5
