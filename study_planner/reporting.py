@@ -7,7 +7,7 @@ from .planner import StudyTask
 
 def remaining_minutes(tasks: Iterable[StudyTask]) -> int:
     """Return the number of planned study minutes that remain."""
-    return sum(task.minutes for task in tasks)
+    return sum(task.minutes for task in tasks if not task.completed)
 
 
 def completion_percent(tasks: Iterable[StudyTask]) -> float:
