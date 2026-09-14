@@ -17,7 +17,7 @@ def task_to_record(task: StudyTask) -> Dict[str, RecordValue]:
         "minutes": task.minutes,
         "priority": task.priority,
         "due_date": task.due_date.isoformat(),
-        "completed": str(task.completed).lower(),
+        "completed": task.completed,
     }
 
 
