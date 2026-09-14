@@ -36,6 +36,8 @@ def completion_state(tasks: Iterable[StudyTask]) -> str:
     task_list = list(tasks)
     if not task_list:
         return "empty"
-    if any(task.completed for task in task_list):
+    if all(task.completed for task in task_list):
         return "complete"
+    if any(task.completed for task in task_list):
+        return "in progress"
     return "open"
