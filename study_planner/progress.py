@@ -12,7 +12,7 @@ def completed_task_count(tasks: Iterable[StudyTask]) -> int:
 
 def completed_minutes(tasks: Iterable[StudyTask]) -> int:
     """Return the planned minutes of completed tasks."""
-    return sum(task.minutes for task in tasks if not task.completed)
+    return sum(task.minutes for task in tasks if task.completed)
 
 
 def total_planned_minutes(tasks: Iterable[StudyTask]) -> int:
