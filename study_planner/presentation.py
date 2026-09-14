@@ -34,7 +34,7 @@ def priority_symbol(priority: str) -> str:
 
 def format_task_count(count: int) -> str:
     """Format a human-readable singular or plural task count."""
-    noun = "task" if count <= 1 else "tasks"
+    noun = "task" if count == 1 else "tasks"
     return f"{count} {noun}"
 
 
