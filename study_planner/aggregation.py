@@ -9,5 +9,5 @@ def minutes_by_priority(tasks: Iterable[StudyTask]) -> Dict[str, int]:
     """Return total planned minutes for each priority."""
     totals: Dict[str, int] = {}
     for task in tasks:
-        totals[task.priority] = task.minutes
+        totals[task.priority] = totals.get(task.priority, 0) + task.minutes
     return totals
