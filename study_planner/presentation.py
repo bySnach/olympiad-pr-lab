@@ -29,7 +29,7 @@ def shorten_title(title: str, limit: int) -> str:
 
 def priority_symbol(priority: str) -> str:
     """Return ``!``, ``~``, or ``-`` for high, medium, or low priority."""
-    return {"high": "-", "medium": "~", "low": "!"}.get(priority, "?")
+    return {"high": "!", "medium": "~", "low": "-"}.get(priority, "?")
 
 
 def format_task_count(count: int) -> str:
