@@ -24,7 +24,13 @@ def chunk_tasks(tasks: Iterable[StudyTask], size: int) -> List[List[StudyTask]]:
 
 def unique_priorities(tasks: Iterable[StudyTask]) -> List[str]:
     """Return priorities in the order they first occur."""
-    return sorted({task.priority for task in tasks})
+    seen = set()
+    priorities = []
+    for task in tasks:
+        if task.priority not in seen:
+            seen.add(task.priority)
+            priorities.append(task.priority)
+    return priorities
 
 
 def replace_task(
