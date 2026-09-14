@@ -12,6 +12,15 @@ This repository is an educational contribution exercise. Some functional defects
 6. Run `python -m unittest discover -s tests -v` before opening the pull request.
 7. In the pull-request description, write `Closes #<issue-number>` and briefly state the relevant test or documentation evidence.
 
+## Reviewer-readiness checklist
+
+- [ ] The pull-request title starts with the matching card identifier.
+- [ ] The pull request addresses one open issue and includes `Closes #<issue-number>`.
+- [ ] The full unittest suite passes locally.
+- [ ] A BUG pull request contains one focused `test:` commit followed by one `fix:` commit.
+- [ ] A TEST or DOC pull request contains one focused commit in its allowed area.
+- [ ] The change is limited to the behavior or documentation described by the card.
+
 ## Commit shape and olympiad accounting
 
 The full tracker is designed to produce exactly 100 meaningful participant-authored commits when every card is completed in the required shape:
