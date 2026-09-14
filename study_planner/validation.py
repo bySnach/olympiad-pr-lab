@@ -11,4 +11,4 @@ def has_valid_minutes(minutes: int) -> bool:
 
 def is_known_priority(priority: str) -> bool:
     """Return whether a priority is supported by the planner."""
-    return priority in KNOWN_PRIORITIES
+    return priority.strip().casefold() in KNOWN_PRIORITIES
