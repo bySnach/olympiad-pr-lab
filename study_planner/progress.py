@@ -7,7 +7,7 @@ from .planner import StudyTask
 
 def completed_task_count(tasks: Iterable[StudyTask]) -> int:
     """Return how many supplied tasks are completed."""
-    return sum(not task.completed for task in tasks)
+    return sum(task.completed for task in tasks)
 
 
 def completed_minutes(tasks: Iterable[StudyTask]) -> int:
