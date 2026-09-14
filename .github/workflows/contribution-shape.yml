@@ -13,10 +13,13 @@ permissions:
 
 jobs:
   commit-shape:
-    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
+      - name: Mark non-PR runs as not applicable
+        if: github.event_name != 'pull_request'
+        run: echo "Contribution-shape validation applies to pull requests."
       - name: Verify the olympiad contribution shape
+        if: github.event_name == 'pull_request'
         env:
           GITHUB_TOKEN: ${{ github.token }}
           PR_BASE: ${{ github.event.pull_request.base.ref }}
@@ -128,3 +131,4 @@ jobs:
               [[ -z "$non_docs" ]] || fail "A DOC card must change documentation files only."
               ;;
           esac
+
