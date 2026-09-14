@@ -22,6 +22,8 @@ The full tracker is designed to produce exactly 100 meaningful participant-autho
 
 Do not add cosmetic, empty, or unrelated commits. If review requires a correction, amend the relevant commit or interactively rebase the branch so its required commit count stays intact. The count applies to participant commits in pull-request history; platform-generated merge commits are not part of the olympiad score. Maintainers should use rebase merging so the reviewed commit shape remains visible on `main`.
 
+The `contribution shape` GitHub Actions check validates the exact card title, its matching open Issue, commit count and subject order, and the focused test/source/documentation area. A duplicate, invented, or incorrectly shaped card cannot pass the check.
+
 ## What makes a strong submission
 
 - The required small, readable commit history for the selected card.
