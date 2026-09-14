@@ -33,8 +33,9 @@ def replace_task(
 ) -> List[StudyTask]:
     """Replace the task with the matching ID without changing list order."""
     return [
-        task for task in tasks if task.task_id != replacement.task_id
-    ] + [replacement]
+        replacement if task.task_id == replacement.task_id else task
+        for task in tasks
+    ]
 
 
 def without_task_id(tasks: Iterable[StudyTask], task_id: str) -> List[StudyTask]:
