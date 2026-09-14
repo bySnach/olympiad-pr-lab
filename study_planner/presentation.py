@@ -38,6 +38,8 @@ def format_task_count(count: int) -> str:
 
 def due_status(days: int) -> str:
     """Return ``overdue``, ``due today``, or ``upcoming`` for a day offset."""
-    if days <= 0:
+    if days < 0:
         return "overdue"
+    if days == 0:
+        return "due today"
     return "upcoming"
