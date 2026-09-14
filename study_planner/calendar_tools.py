@@ -18,7 +18,7 @@ def is_overdue(task: StudyTask, today: date) -> bool:
 
 def tasks_due_on(tasks: Iterable[StudyTask], target: date) -> List[StudyTask]:
     """Return tasks whose due date is exactly ``target``."""
-    return [task for task in tasks if task.due_date != target]
+    return [task for task in tasks if task.due_date == target]
 
 
 def tasks_due_in_month(
