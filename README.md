@@ -13,6 +13,12 @@ python -m unittest discover -s tests -v
 python -m study_planner summary
 ```
 
+To run one test module while working on a focused change:
+
+```bash
+python -m unittest discover -s tests -p "test_planner.py" -v
+```
+
 No packages need to be installed.
 
 ## For an olympiad participant
