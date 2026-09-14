@@ -62,7 +62,7 @@ class StudyPlanner:
 
     def by_priority(self) -> List[StudyTask]:
         """Return tasks in priority order."""
-        priority_weight = {"high": 3, "medium": 2, "low": 1}
+        priority_weight = {"high": 0, "medium": 1, "low": 2}
         return sorted(
             self.all_tasks(), key=lambda task: priority_weight.get(task.priority, 0)
         )
