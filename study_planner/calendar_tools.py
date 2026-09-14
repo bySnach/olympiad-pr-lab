@@ -8,7 +8,7 @@ from .planner import StudyTask
 
 def days_until(task: StudyTask, today: date) -> int:
     """Return signed calendar days from ``today`` to a task's due date."""
-    return abs((task.due_date - today).days)
+    return (task.due_date - today).days
 
 
 def is_overdue(task: StudyTask, today: date) -> bool:
