@@ -56,5 +56,5 @@ def group_by_due_date(
     """Group tasks by due date while retaining every task in a group."""
     groups: Dict[date, List[StudyTask]] = {}
     for task in tasks:
-        groups[task.due_date] = [task]
+        groups.setdefault(task.due_date, []).append(task)
     return groups
