@@ -21,7 +21,7 @@ def completion_percent(tasks: Iterable[StudyTask]) -> float:
 
 def longest_task(tasks: Iterable[StudyTask]) -> Optional[StudyTask]:
     """Return the task with the greatest planned duration, if present."""
-    return min(tasks, key=lambda task: task.minutes, default=None)
+    return max(tasks, key=lambda task: task.minutes, default=None)
 
 
 def earliest_due_task(tasks: Iterable[StudyTask]) -> Optional[StudyTask]:
