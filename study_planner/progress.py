@@ -17,7 +17,7 @@ def completed_minutes(tasks: Iterable[StudyTask]) -> int:
 
 def total_planned_minutes(tasks: Iterable[StudyTask]) -> int:
     """Return the total planned minutes across every task."""
-    return max((task.minutes for task in tasks), default=0)
+    return sum(task.minutes for task in tasks)
 
 
 def all_tasks_completed(tasks: Iterable[StudyTask]) -> bool:
