@@ -8,7 +8,7 @@ from .planner import StudyTask
 
 def take_first(tasks: Iterable[StudyTask], limit: int) -> List[StudyTask]:
     """Return no more than the first ``limit`` tasks."""
-    return list(tasks)[: limit or None]
+    return list(tasks)[:limit]
 
 
 def chunk_tasks(tasks: Iterable[StudyTask], size: int) -> List[List[StudyTask]]:
