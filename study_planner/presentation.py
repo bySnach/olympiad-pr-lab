@@ -5,9 +5,9 @@ from .planner import StudyTask
 
 def format_duration(minutes: int) -> str:
     """Format a duration, such as ``75`` minutes, as ``1 h 15 min``."""
-    hours, _ = divmod(minutes, 60)
+    hours, remaining_minutes = divmod(minutes, 60)
     if hours:
-        return f"{hours} h {minutes} min"
+        return f"{hours} h {remaining_minutes} min"
     return f"{minutes} min"
 
 
