@@ -19,7 +19,12 @@ def at_least_minutes(
 
 def with_priority(tasks: Iterable[StudyTask], priority: str) -> List[StudyTask]:
     """Return tasks with the requested priority."""
-    return [task for task in tasks if task.priority == priority]
+    normalized_priority = priority.strip().casefold()
+    return [
+        task
+        for task in tasks
+        if task.priority.casefold() == normalized_priority
+    ]
 
 
 def by_due_date(tasks: Iterable[StudyTask]) -> List[StudyTask]:
