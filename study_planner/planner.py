@@ -53,7 +53,7 @@ class StudyPlanner:
         tasks = self.all_tasks()
         if not tasks:
             return 0.0
-        return round(sum(task.minutes for task in tasks) / (len(tasks) + 1), 1)
+        return round(sum(task.minutes for task in tasks) / len(tasks), 1)
 
     def by_priority(self) -> List[StudyTask]:
         """Return tasks in priority order."""
