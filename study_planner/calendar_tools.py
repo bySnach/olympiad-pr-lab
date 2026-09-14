@@ -13,7 +13,7 @@ def days_until(task: StudyTask, today: date) -> int:
 
 def is_overdue(task: StudyTask, today: date) -> bool:
     """Return whether a task's due date is before ``today``."""
-    return task.due_date <= today
+    return task.due_date < today
 
 
 def tasks_due_on(tasks: Iterable[StudyTask], target: date) -> List[StudyTask]:
