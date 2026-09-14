@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "olympiad-pr-lab"
+version = "0.1.0"
+description = "A dependency-free GitHub contribution practice lab"
+requires-python = ">=3.9"
+
+[project.scripts]
+study-planner = "study_planner.__main__:main"
+
+[tool.setuptools]
+packages = ["study_planner"]
