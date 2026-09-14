@@ -1,0 +1,130 @@
+name: contribution shape
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+
+jobs:
+  commit-shape:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify the olympiad contribution shape
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PR_BASE: ${{ github.event.pull_request.base.ref }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          set -euo pipefail
+
+          api() {
+            curl --fail --silent --show-error -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY$1"
+          }
+
+          fail() {
+            echo "$1"
+            exit 1
+          }
+
+          [[ "$PR_BASE" == "main" ]] || fail "Olympiad pull requests must target main."
+
+          if [[ "$PR_TITLE" =~ ^(BUG-[0-9]{2}|TEST-[0-9]{2}|DOC-[0-9]{2}): ]]; then
+            card_id="${BASH_REMATCH[1]}"
+          else
+            fail "PR title must start with a tracked BUG-XX:, TEST-XX:, or DOC-XX: card ID."
+          fi
+
+          if [[ "$card_id" =~ ^BUG-([0-9]{2})$ ]]; then
+            card_number=$((10#${BASH_REMATCH[1]}))
+            if (( card_number >= 1 && card_number <= 6 )); then
+              issue_number=$card_number
+            elif (( card_number >= 7 && card_number <= 16 )); then
+              issue_number=$((card_number + 2))
+            elif (( card_number >= 17 && card_number <= 47 )); then
+              issue_number=$((card_number + 6))
+            else
+              fail "$card_id is not a tracked olympiad card."
+            fi
+            expected_commits=2
+            expected_subjects=("test:" "fix:")
+            change_kind="bug"
+          else
+            case "$card_id" in
+              TEST-01) issue_number=7 ;;
+              TEST-02) issue_number=19 ;;
+              TEST-03) issue_number=20 ;;
+              DOC-01) issue_number=8 ;;
+              DOC-02) issue_number=21 ;;
+              DOC-03) issue_number=22 ;;
+              *) fail "$card_id is not a tracked olympiad card." ;;
+            esac
+            expected_commits=1
+            if [[ "$card_id" == TEST-* ]]; then
+              expected_subjects=("test:")
+              change_kind="test"
+            else
+              expected_subjects=("docs:")
+              change_kind="docs"
+            fi
+          fi
+
+          if ! grep -Eiq "(^|[[:space:].,;:!?])(closes|fixes|resolves)[[:space:]]+#${issue_number}([[:space:].,;:!?]|$)" <<< "$PR_BODY"; then
+            fail "$card_id must link its matching issue with Closes #$issue_number."
+          fi
+
+          issue_json="$(api "/issues/$issue_number")"
+          [[ "$(jq -r '.state' <<< "$issue_json")" == "open" ]] || fail "Issue #$issue_number is not open."
+          issue_title="$(jq -r '.title' <<< "$issue_json")"
+          case "$issue_title" in
+            "$card_id":*|"$card_id "*) ;;
+            *) fail "Issue #$issue_number does not match $card_id." ;;
+          esac
+
+          pulls_json="$(api "/pulls?state=all&per_page=100")"
+          duplicates="$(jq --arg card "$card_id" --argjson current "$PR_NUMBER" '[.[] | select(.number != $current and (.state == "open" or .merged_at != null) and (.title | startswith($card + ":"))] | length' <<< "$pulls_json")"
+          (( duplicates == 0 )) || fail "$card_id already has an open or merged pull request."
+
+          commits_json="$(api "/pulls/$PR_NUMBER/commits?per_page=100")"
+          actual_commits="$(jq 'length' <<< "$commits_json")"
+          (( actual_commits == expected_commits )) || fail "$card_id needs exactly $expected_commits commits; found $actual_commits."
+          mapfile -t subjects < <(jq -r '.[].commit.message | split("\n")[0]' <<< "$commits_json")
+          for index in "${!expected_subjects[@]}"; do
+            [[ "${subjects[$index]}" == "${expected_subjects[$index]}"* ]] || fail "Commit $((index + 1)) for $card_id must start with ${expected_subjects[$index]}."
+          done
+
+          files_json="$(api "/pulls/$PR_NUMBER/files?per_page=100")"
+          mapfile -t files < <(jq -r '.[].filename' <<< "$files_json")
+          (( ${#files[@]} > 0 )) || fail "$card_id must change files."
+
+          case "$change_kind" in
+            bug)
+              first_sha="$(jq -r '.[0].sha' <<< "$commits_json")"
+              second_sha="$(jq -r '.[1].sha' <<< "$commits_json")"
+              first_files="$(api "/commits/$first_sha" | jq -r '.files[].filename')"
+              second_files="$(api "/commits/$second_sha" | jq -r '.files[].filename')"
+              grep -q '^tests/' <<< "$first_files" || fail "The first BUG commit must add focused test coverage."
+              grep -q '^study_planner/' <<< "$second_files" || fail "The second BUG commit must contain the production fix."
+              first_non_tests="$(grep -v '^tests/' <<< "$first_files" || true)"
+              second_non_source="$(grep -v '^study_planner/' <<< "$second_files" || true)"
+              [[ -z "$first_non_tests" ]] || fail "The first BUG commit may change test files only."
+              [[ -z "$second_non_source" ]] || fail "The second BUG commit may change production files only."
+              ;;
+            test)
+              printf '%s\n' "${files[@]}" | grep -q '^tests/' || fail "A TEST card must change a focused test."
+              non_tests="$(printf '%s\n' "${files[@]}" | grep -v '^tests/' || true)"
+              [[ -z "$non_tests" ]] || fail "A TEST card must not change production or documentation files."
+              ;;
+            docs)
+              non_docs="$(printf '%s\n' "${files[@]}" | grep -vE '\.md$' || true)"
+              [[ -z "$non_docs" ]] || fail "A DOC card must change documentation files only."
+              ;;
+          esac
