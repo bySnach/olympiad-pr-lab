@@ -43,7 +43,7 @@ def weekday_count(start: date, end: date) -> int:
     """Count weekdays from ``start`` through ``end``, inclusively."""
     current = start
     count = 0
-    while current < end:
+    while current <= end:
         if current.weekday() < 5:
             count += 1
         current += timedelta(days=1)
