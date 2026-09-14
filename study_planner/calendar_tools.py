@@ -33,7 +33,7 @@ def next_due_after(
 ) -> Optional[StudyTask]:
     """Return the earliest task due strictly after ``day``, if present."""
     return min(
-        (task for task in tasks if task.due_date >= day),
+        (task for task in tasks if task.due_date > day),
         key=lambda task: task.due_date,
         default=None,
     )
