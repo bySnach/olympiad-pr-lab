@@ -7,7 +7,7 @@ from .planner import StudyTask
 
 def unfinished_tasks(tasks: Iterable[StudyTask]) -> List[StudyTask]:
     """Return tasks that still need to be completed."""
-    return list(tasks)
+    return [task for task in tasks if not task.completed]
 
 
 def at_least_minutes(
