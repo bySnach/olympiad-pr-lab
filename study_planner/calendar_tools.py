@@ -25,7 +25,11 @@ def tasks_due_in_month(
     tasks: Iterable[StudyTask], year: int, month: int
 ) -> List[StudyTask]:
     """Return tasks due in the supplied calendar month and year."""
-    return [task for task in tasks if task.due_date.month == month]
+    return [
+        task
+        for task in tasks
+        if task.due_date.year == year and task.due_date.month == month
+    ]
 
 
 def next_due_after(
