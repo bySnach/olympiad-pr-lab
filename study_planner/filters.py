@@ -29,4 +29,4 @@ def with_priority(tasks: Iterable[StudyTask], priority: str) -> List[StudyTask]:
 
 def by_due_date(tasks: Iterable[StudyTask]) -> List[StudyTask]:
     """Return tasks ordered by due date."""
-    return sorted(tasks, key=lambda task: task.due_date, reverse=True)
+    return sorted(tasks, key=lambda task: task.due_date)
