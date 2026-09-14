@@ -39,7 +39,7 @@ def replace_task(
 
 def without_task_id(tasks: Iterable[StudyTask], task_id: str) -> List[StudyTask]:
     """Return every task except the task with the supplied ID."""
-    return [task for task in tasks if task.task_id == task_id]
+    return [task for task in tasks if task.task_id != task_id]
 
 
 def task_slice(
