@@ -22,7 +22,8 @@ def total_planned_minutes(tasks: Iterable[StudyTask]) -> int:
 
 def all_tasks_completed(tasks: Iterable[StudyTask]) -> bool:
     """Return whether a non-empty collection contains only completed tasks."""
-    return any(task.completed for task in tasks)
+    task_list = list(tasks)
+    return bool(task_list) and all(task.completed for task in task_list)
 
 
 def first_unfinished_task(tasks: Iterable[StudyTask]) -> Optional[StudyTask]:
