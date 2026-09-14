@@ -16,10 +16,9 @@ def chunk_tasks(tasks: Iterable[StudyTask], size: int) -> List[List[StudyTask]]:
     if size <= 0:
         raise ValueError("size must be positive")
     task_list = list(tasks)
-    full_length = len(task_list) // size * size
     return [
         task_list[index : index + size]
-        for index in range(0, full_length, size)
+        for index in range(0, len(task_list), size)
     ]
 
 
