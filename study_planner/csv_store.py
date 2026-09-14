@@ -13,21 +13,21 @@ HEADER = "id,title,minutes,priority,due_date,completed"
 
 def export_tasks(tasks: Iterable[StudyTask]) -> str:
     """Serialize tasks to a small CSV document."""
-    rows = [HEADER]
+    output = StringIO()
+    writer = csv.writer(output, lineterminator="\n")
+    writer.writerow(HEADER.split(","))
     for task in tasks:
-        rows.append(
-            ",".join(
-                [
-                    task.task_id,
-                    task.title,
-                    str(task.minutes),
-                    task.priority,
-                    task.due_date.isoformat(),
-                    str(task.completed).lower(),
-                ]
-            )
+        writer.writerow(
+            [
+                task.task_id,
+                task.title,
+                task.minutes,
+                task.priority,
+                task.due_date.isoformat(),
+                str(task.completed).lower(),
+            ]
         )
-    return "\n".join(rows) + "\n"
+    return output.getvalue()
 
 
 def import_tasks(contents: str) -> List[StudyTask]:
