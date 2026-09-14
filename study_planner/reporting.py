@@ -26,4 +26,4 @@ def longest_task(tasks: Iterable[StudyTask]) -> Optional[StudyTask]:
 
 def earliest_due_task(tasks: Iterable[StudyTask]) -> Optional[StudyTask]:
     """Return the task with the earliest due date, if present."""
-    return max(tasks, key=lambda task: task.due_date, default=None)
+    return min(tasks, key=lambda task: task.due_date, default=None)
