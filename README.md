@@ -2,7 +2,7 @@
 
 `Olympiad PR Lab` is a tiny, dependency-free study-planner project for practicing an honest GitHub contribution workflow.
 
-It contains a few isolated, safe functional defects on purpose. They are not security exercises and do not touch networks, files outside the project, credentials, or third-party services. The goal is to choose one scoped problem, prove it with a regression test, fix it, and submit a focused pull request.
+It contains isolated, safe functional defects on purpose. They are not security exercises and do not touch networks, files outside the project, credentials, or third-party services. The goal is to choose one scoped problem, prove it with a regression test, fix it, and submit a focused pull request.
 
 ## Quick start
 
@@ -26,6 +26,8 @@ No packages need to be installed.
 
 Please keep one issue per pull request. A concise series of independent contributions is more valuable here than one large rewrite.
 
+The starter tracker contains 22 independent contribution cards: 16 bugfixes, 3 test-only tasks, and 3 documentation tasks.
+
 ## Repository map
 
 - `study_planner/` — the deliberately small library and command-line demo.
@@ -37,3 +39,4 @@ Please keep one issue per pull request. A concise series of independent contribu
 ## License
 
 Released under the [MIT License](LICENSE).
+
