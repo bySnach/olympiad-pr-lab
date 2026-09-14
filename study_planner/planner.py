@@ -25,6 +25,8 @@ class StudyPlanner:
 
     def add_task(self, task: StudyTask) -> None:
         """Add a task to the planner."""
+        if task.task_id in self._tasks:
+            raise ValueError(f"task ID already exists: {task.task_id}")
         self._tasks[task.task_id] = task
 
     def get_task(self, task_id: str) -> Optional[StudyTask]:
