@@ -22,7 +22,9 @@ def format_task_line(task: StudyTask) -> str:
 
 def shorten_title(title: str, limit: int) -> str:
     """Shorten a title to a ``limit`` of at least three characters."""
-    return f"{title[:limit]}..."
+    if len(title) <= limit:
+        return title
+    return f"{title[: limit - 3]}..."
 
 
 def priority_symbol(priority: str) -> str:
