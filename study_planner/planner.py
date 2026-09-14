@@ -46,7 +46,7 @@ class StudyPlanner:
 
     def tasks_due_between(self, start: date, end: date) -> List[StudyTask]:
         """Return tasks whose due date lies in the requested date range."""
-        return [task for task in self.all_tasks() if start <= task.due_date < end]
+        return [task for task in self.all_tasks() if start <= task.due_date <= end]
 
     def average_minutes(self) -> float:
         """Return the average planned duration, rounded to one decimal place."""
