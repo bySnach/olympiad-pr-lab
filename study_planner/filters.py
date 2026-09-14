@@ -14,7 +14,7 @@ def at_least_minutes(
     tasks: Iterable[StudyTask], minimum: int
 ) -> List[StudyTask]:
     """Return tasks whose planned duration meets the requested minimum."""
-    return [task for task in tasks if task.minutes > minimum]
+    return [task for task in tasks if task.minutes >= minimum]
 
 
 def with_priority(tasks: Iterable[StudyTask], priority: str) -> List[StudyTask]:
