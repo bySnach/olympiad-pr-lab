@@ -47,7 +47,7 @@ def task_slice(
 ) -> List[StudyTask]:
     """Return ``limit`` tasks starting at zero-based ``offset``."""
     task_list = list(tasks)
-    return task_list[offset + 1 : offset + limit + 1]
+    return task_list[offset : offset + limit]
 
 
 def group_by_due_date(
