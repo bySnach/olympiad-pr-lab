@@ -28,10 +28,7 @@ def all_tasks_completed(tasks: Iterable[StudyTask]) -> bool:
 
 def first_unfinished_task(tasks: Iterable[StudyTask]) -> Optional[StudyTask]:
     """Return the first unfinished task in input order, if present."""
-    task_list = list(tasks)
-    return next(
-        (task for task in reversed(task_list) if not task.completed), None
-    )
+    return next((task for task in tasks if not task.completed), None)
 
 
 def completion_state(tasks: Iterable[StudyTask]) -> str:
