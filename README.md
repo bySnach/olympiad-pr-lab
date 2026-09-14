@@ -20,13 +20,13 @@ No packages need to be installed.
 1. Read the public product rules in [docs/behavior.md](docs/behavior.md).
 2. Choose one open GitHub issue or one card in [docs/task-cards.md](docs/task-cards.md).
 3. Fork the repository and create one branch for one problem.
-4. Add a regression test that exposes the current behavior.
-5. Make the smallest fix that makes the new test pass.
+4. For a `BUG` card, add a regression test that exposes the current behavior and then make the smallest fix that makes the new test pass.
+5. For a `TEST` or `DOC` card, make only the focused test or documentation change described by that card.
 6. Run the test suite and open a pull request that links the issue.
 
 Please keep one issue per pull request. A concise series of independent contributions is more valuable here than one large rewrite.
 
-The starter tracker contains 22 independent contribution cards: 16 bugfixes, 3 test-only tasks, and 3 documentation tasks.
+The starter tracker contains 53 independent contribution cards: 47 bugfixes, 3 test-only tasks, and 3 documentation tasks. Following the prescribed commit shape for every card produces exactly 100 participant-authored commits without padding history.
 
 ## Repository map
 
